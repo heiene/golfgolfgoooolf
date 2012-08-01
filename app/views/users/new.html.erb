@@ -1,0 +1,11 @@
+<%= provide(:title, 'Sign up') %>
+<h1>Sign up</h1>
+
+<%= form_for(@user) do |f| %>
+  <%= render 'shared/user_form', f: f %>
+  <%= f.submit "Create my account" %> 
+<% end %>
+
+
+
+
