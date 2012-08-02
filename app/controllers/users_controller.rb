@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      sign_in user
+      sign_in @user
       flash[:success] = "Welcome to theGolfApp"
       redirect_to @user
     else
@@ -21,8 +21,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user

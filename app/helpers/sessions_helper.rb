@@ -1,12 +1,13 @@
 module SessionsHelper
 
   def sign_in(user)
-    if :remember_me
-      #token
+    if params[:remember_me]
       cookies.permanent[:remember_token] = user.remember_token
       self.current_user = user
+      flash[:success] = "du har valgt aa forbli innlogga"
     else
       cookies[:remember_token] = user.remember_token
+      self.current_user = user
     end
   end
 
@@ -20,7 +21,7 @@ module SessionsHelper
 
   def current_user
     if cookies[:remember_token]
-      @current_user ||= User.find_by_remember_token[:remember_token] 
+      @current_user ||= User.find_by_remember_token(cookies[:remember_token])
     end
   end
 
