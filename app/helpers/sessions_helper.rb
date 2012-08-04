@@ -6,6 +6,10 @@ module SessionsHelper
       self.current_user = user
       flash[:success] = "du har valgt aa forbli innlogga"
     else
+      #Mulig man bør legge på en if remember token er tom? Lurt å bruke sign_in flere steder,
+      #det er viktig for å motvirke session hijacks
+      #blant annet anbefalt å kjøre en sign_in på user_controller update (kun kopiert fra tut)
+      #får se
       cookies[:remember_token] = user.remember_token
       self.current_user = user
     end
