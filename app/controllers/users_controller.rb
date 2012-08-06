@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user, only: [:edit, :update, :index]
+  before_filter :signed_in_user, only: [:edit, :update, :index] # Signed_in_user er flyttet til sessionskontroller
+                                                                # for å være tilgjengelig for andre klasser.
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: :destroy
 
@@ -49,18 +50,18 @@ class UsersController < ApplicationController
     end
     redirect_to users_path
   end
+
+  
+
+
   private
-    
-    def signed_in_user
-      unless signed_in?
-        redirect_to signin_path
-        flash[:notice] = "Please sign in."
-      end
-    end
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to root_path  unless current_user?(@user)
+      unless current_user?(@user)
+        flash[:warning] = "not correct user"
+        redirect_to root_path
+      end
     end
 
     def admin_user

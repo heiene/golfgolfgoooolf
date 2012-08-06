@@ -25,7 +25,7 @@ module SessionsHelper
 
   def current_user
     if cookies[:remember_token]
-      @current_user ||= User.find_by_remember_token(cookies[:remember_token])
+      @current_user ||= User.find_by_remember_token(cookies[:remember_token]) 
     end
   end
 
@@ -36,6 +36,13 @@ module SessionsHelper
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)
+  end
+
+  def signed_in_user
+      unless signed_in?
+        redirect_to signin_path
+        flash[:notice] = "Please sign in."
+      end
   end
 
 end
