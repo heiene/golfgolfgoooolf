@@ -1,4 +1,4 @@
-<%= provide(:title, "Users") %>
+<%= provide(:title, "All users") %>
 <h1>Users</h1>
 
   <% @Users.each do |user| %>
@@ -7,7 +7,7 @@
     
     <% if current_user.admin? && !current_user?(user)%>
       
-      | <%= link_to ":delete user", user, method: :delete, class:"btn btn-mini btn-danger",
+      | <%= link_to "X", user, method: :delete, class:"badge badge-important",
                                   data: { confirm: "You sure?" } %>      
     <% end %> 
     <% if current_user.admin? %>
