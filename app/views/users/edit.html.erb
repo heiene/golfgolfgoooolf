@@ -5,6 +5,7 @@
 <%= form_for(@user) do |f| %>
   <%= render 'shared/user_form', f: f %>
   <%= f.submit "Save changes" , class:"btn btn-info"%>
+  <%= gravatar_for(@user, size: 40) %>
   <a href="http://gravatar.com/emails">change</a>
 <% end %>
 

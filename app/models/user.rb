@@ -16,8 +16,18 @@
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
-  has_secure_password
+  
+  #Defining the friendships relations
+  has_many :friendships
+  has_many :direct_friends, through: :friendships, source: :friend, conditions: ['approved = ?', true]
 
+  has_many :indirect_friendships, class_name: 'Friendship', foreign_key: "friend_id"
+  has_many :indirect_friends, through: :indirect_friendships, conditions: ['approved = ?', true], source: :user
+
+  has_many :pending_friendships, through: :friendships, conditions: ['approved = ?', false], foreign_key: "user_id", source: :friend
+  has_many :requested_friendships, class_name: 'Friendship', foreign_key: "friend_id", conditions: ['approved = ?', false]
+
+  has_secure_password
   VALID_EMAIL_FORMAT = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false },
@@ -31,6 +41,9 @@ class User < ActiveRecord::Base
     create_remember_token
   end
 
+  def friends
+    direct_friends | indirect_friends
+  end
   private
 
     def create_remember_token

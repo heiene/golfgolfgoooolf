@@ -1,3 +1,61 @@
 <%= provide(:title, @user.name ) %>
 <h1><%= @user.name %></h1>
 <p><%= gravatar_for(@user) %></p>
+----------------------------------
+
+  <h2>Friends</h2>
+  
+  <ul> <% for user in @user.friends %>
+          <li><%=  user.name %> | <%=  user.class %> | <%=  user.id %></li>
+        <% end %>
+       
+  </ul>
+
+---------------------------------
+
+  <h2>Direct friends</h2>
+  
+  <ul> <% for user in @user.direct_friends %>
+          <li><%=  user.name %> | <%=  user.class %> | <%=  user.id %></li>
+        <% end %>
+       
+  </ul>
+
+---------------------------------
+  <h2>Indirect friends</h2>
+  
+  <ul> <% for user in @user.indirect_friends %>
+          <li><%=  user.name %> | <%=  user.class %> | <%=  user.id %></li>
+        <% end %>
+       
+  </ul>
+
+----------------------------------
+  <h2> Friend Requests from others</h2>
+  
+  <ul> <% for friendship in @user.requested_friendships %>
+    <li><%=  User.find(friendship.user_id).name %> | <%=  friendship.class %> | <%=  friendship.id %>
+        <%= link_to "Confirm", controller: :friendships, action: :approve, id: friendship.id  %></li>
+        <% end %>
+  </ul>
+
+----------------------------------
+  <h2>friendships pending</h2>
+  
+  <ul> <% for user in @user.pending_friendships %>
+    <li><%=  user.name %> | <%=  user.class %> | <%=  user.id %></li>
+        <% end %>
+  </ul>
+<!-- Mangler fortsatt masse:
+      * Må ha unique på friends - ikke kunn elegge til venn flere ganger - HALVVEIS
+        går ikke an å legge til en venn to ganger, men vi må også ha en redirect til at om du ser en som har lagt deg til
+        så er valget kun accept ikke å initiere en tillteggelse.
+      * Må kunnse slette - Her mistenker jeg vi må avhengig av om det er indirect eller direct venn som initierer, inn å søke opp friendship ID for så å slette den.
+      * Venn skal ikke legges til før det er bekreftet - DONE
+      * Kunne søke opp venn
+      * Ikke se profil til ikke-venn
+
+
+      under er en annen måte å skrive itereringskoden på, litt mer likt pyton, litt letter forståelig -->
+
+  

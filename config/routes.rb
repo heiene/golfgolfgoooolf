@@ -1,7 +1,12 @@
 GolfApp::Application.routes.draw do
+  # get "friendships/destroy"
+
+  # get "friendships/create"
+
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-
+  resources :friendships
+  
   root to: 'static_pages#home'
   
   match '/help',    to: 'static_pages#help'
@@ -10,6 +15,7 @@ GolfApp::Application.routes.draw do
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
   match '/signup',  to: 'users#new'
+  match '/approve',  to: 'friendships#approve'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
