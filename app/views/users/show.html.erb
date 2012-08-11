@@ -1,14 +1,18 @@
 <%= provide(:title, @user.name ) %>
 <h1><%= @user.name %></h1>
 <p><%= gravatar_for(@user) %></p>
+<p><%= @user.friendships.count %> | <%= @user.indirect_friendships.count %></p>
+<p><% for friend in @user.indirect_friendships %>
+<li>Users id: <%= friend.friend_id %> | Friendrequest ID: <%= friend.user_id %></li>
+<% end %></p>
 ----------------------------------
 
   <h2>Friends</h2>
   
-  <ul> <% for user in @user.friends %>
-          <li><%=  user.name %> | <%=  user.class %> | <%=  user.id %></li>
-        <% end %>
-       
+  <ul>  
+    <% for user in @user.friends %>
+      <li><%=  user.name %> | <%=  user.class %> | <%=  user.id %></li>
+    <% end %>
   </ul>
 
 ---------------------------------
@@ -34,8 +38,8 @@
   <h2> Friend Requests from others</h2>
   
   <ul> <% for friendship in @user.requested_friendships %>
-    <li><%=  User.find(friendship.user_id).name %> | <%=  friendship.class %> | <%=  friendship.id %>
-        <%= link_to "Confirm", controller: :friendships, action: :approve, id: friendship.id  %></li>
+    <li><%=  User.find(friendship.user_id).name %> | <%=  friendship.class %> | <%= friendship.id %>
+        <%= confirm_friendship_link(friendship.id, @user.id) %></li>
         <% end %>
   </ul>
 
@@ -55,7 +59,12 @@
       * Kunne søke opp venn
       * Ikke se profil til ikke-venn
 
+      Må bruke friendships og user_id/friend_id til å sette opp status i en helper eller noe?
 
-      under er en annen måte å skrive itereringskoden på, litt mer likt pyton, litt letter forståelig -->
+      Så må vi ha et metode for å trekke tilbake/delete, en for å rejecte - user som har fått rejection får beskje på en måte, og så må vi ha en for ignore (fjerner bare requesten fra en side, mens blie liggende som pending hos initiatior)
+      
+      Tror vi kan bruke @user.friendships.any? - har begynt med @user.friendships.count og @user.inderct_friendships.count
+      
+      må bare få på status basert på dette og fjerne muligheten til at om man har indirect friendship (eller request) så er det ikke lov til å igangsette. Må gjøre dette på databasen også slik at det er forsikret om at det blir unique
 
-  
+      -->

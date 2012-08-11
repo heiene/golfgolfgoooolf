@@ -18,10 +18,10 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
   
   #Defining the friendships relations
-  has_many :friendships
+  has_many :friendships, dependent: :destroy
   has_many :direct_friends, through: :friendships, source: :friend, conditions: ['approved = ?', true]
 
-  has_many :indirect_friendships, class_name: 'Friendship', foreign_key: "friend_id"
+  has_many :indirect_friendships, class_name: 'Friendship', foreign_key: "friend_id", dependent: :destroy
   has_many :indirect_friends, through: :indirect_friendships, conditions: ['approved = ?', true], source: :user
 
   has_many :pending_friendships, through: :friendships, conditions: ['approved = ?', false], foreign_key: "user_id", source: :friend
