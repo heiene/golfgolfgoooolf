@@ -21,7 +21,7 @@
           <% id = friendship_exists?(user)[1] %>
           <% initiator = friendship_exists?(user)[2] %>
           <% if Friendship.find(id).approved == true %>
-            <%= delete_friendship_link(id, current_user.id)   %>
+            <%= delete_friendship_link("End",id, current_user.id)   %>
           <% elsif initiator == "i" %>
             <%= confirm_friendship_link(id, current_user.id)  %> | 
             <%= reject_friendship_link(id, current_user.id)    %> | 

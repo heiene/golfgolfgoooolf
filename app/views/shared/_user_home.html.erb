@@ -1,0 +1,24 @@
+<h1>homepage for <%= @current_user.name %></h1>
+  <div class="row">
+    <div class="span6">
+      <p>
+        <% if @current_user.requested_friendships.any? %>
+        <div class="alert alert-info alert-block">
+          <a class="close" data-dismiss="alert" href="#">&times;</a>
+          <h4 class="alert-heading">Pending Friendrequests</h4>
+            You have friendrequests pending:
+            <% for friend in @current_user.requested_friendships %>
+            <li><%=  User.find(friend.user_id).name %></li>
+            <% end %>
+        </div>
+        <% end %>
+      </p>
+    </div>
+    <!-- span6 -->
+    <div class="span3 offset3">
+      <%= render 'shared/friend_listing' %> 
+    </div>
+    <!-- span4 -->
+  </div>
+  <!-- row -->
+  

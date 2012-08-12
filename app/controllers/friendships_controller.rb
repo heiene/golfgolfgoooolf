@@ -27,10 +27,10 @@ class FriendshipsController < ApplicationController
     elsif @friendship = current_user.indirect_friendships.find_by_id(params[:id])
       flash[:warning] = "You have ended friendship with #{User.find(@friendship.user_id).name}"
       @friendship.destroy  
-      redirect_to users_path
+      redirect_to root_path
     else
       flash[:warning] = "You have ended cause you can't"
-      redirect_to users_path
+      redirect_to root_path
     end
     
   end
@@ -42,10 +42,10 @@ class FriendshipsController < ApplicationController
 
     if @friendship.save
       flash[:warning] = "You have ignored friendship with #{User.find(@friendship.friend_id).name} Visible status befor:#{before} and after: #{@friendship.visible}"
-      redirect_to users_path
+      redirect_to root_path
     else
       flash[:warning] = "Unable to ignore"
-      redirect_to users_path
+      redirect_to root_path
     end
   end
 
@@ -53,14 +53,14 @@ class FriendshipsController < ApplicationController
     @friendship = current_user.friendships.find(params[:id])
     flash[:warning] = "You have withdrawn friendship with #{User.find(@friendship.friend_id).name}"
     @friendship.destroy
-    redirect_to users_path
+    redirect_to root_path
   end
 
   def reject
     @friendship = current_user.indirect_friendships.find(params[:id])
     flash[:warning] = "You have rejected friendship with #{User.find(@friendship.friend_id).name}"
     @friendship.destroy
-    redirect_to users_path
+    redirect_to root_path
   end
 
   def approve
@@ -69,10 +69,10 @@ class FriendshipsController < ApplicationController
       if @friendship.save
         flash[:success] = "Is approved: #{@friendship.approved} by  User_ID: #{current_user.id}, and Current_user.NAME: #{current_user.name} have accepted #{User.find(Friendship.find(params[:id]).user_id).name} as a friend"
         # flash[:success] = "#{params}"
-        redirect_to users_path
+        redirect_to root_path
       else
         flash[:success] = "Is not approved"
-        redirect_to users_path
+        redirect_to root_path
       end
   end
 

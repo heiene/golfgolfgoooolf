@@ -6,8 +6,5 @@
   <p><%= link_to "Sign up", signup_path, class:"btn btn-info" %></p>
   </br>
 <% else %>
-  <h1>homepage for <%= @current_user.name %></h1>
-  </br>
-  <p></p>
-  </br>
+  <%= render 'shared/user_home' %>
 <% end %>

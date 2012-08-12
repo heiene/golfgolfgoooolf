@@ -1,0 +1,81 @@
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+        Friends
+      </a>
+      <!-- accordion-toggle -->
+    </div>
+    <!-- accordion-heading -->
+    <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+      <div class="accordion-inner">
+        <% for friend in @current_user.friends %>
+          <p><%   id = friendship_exists?(friend)[1] %>
+          <%=  gravatar_for(friend, size: 20) %>
+          <%=  friend.name %>
+          <font size = "1.2">
+          (<%=  delete_friendship_link("delete",id, @current_user.id) %>)
+          </font></p>
+        <% end %>
+
+      </div>
+      <!-- accordion-inner -->
+    </div>
+    <!-- collapseOne -->
+  </div>
+  <!-- accordion-group -->
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+        Friends pending
+      </a>
+      <!-- accordion-toggle -->
+    </div>
+    <!-- accordion-heading -->
+    <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
+      <div class="accordion-inner">
+
+        <% for friendship in @current_user.requested_friendships %>
+          <p><%   user = User.find(friendship.user_id) %>
+          <%   id = friendship_exists?(user)[1] %>
+          <%=  gravatar_for(user, size: 20) %>
+          <%=  user.name %>
+          <font size = "1.2">
+          <%=  confirm_friendship_link(id, @current_user.id)  %> | 
+          <%=  reject_friendship_link(id, @current_user.id)    %> | 
+          <%=  ignore_friendship_link(id, @current_user.id)   %>
+          </font></p>
+        <% end %>
+      </div>
+      <!-- accordion-inner -->
+    </div>
+    <!-- collapseTwo -->
+  </div>
+  <!-- accordion-group -->
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+        Friends requested
+      </a>
+      <!-- accordion-toggle -->
+    </div>
+    <!-- accordion-heading -->
+    <div id="collapseThree" class="accordion-body collapse" style="height: 0px; ">
+      <div class="accordion-inner">
+
+        <% for user in @current_user.pending_friendships %>
+          <p><%   id = friendship_exists?(user)[1] %>
+          <%=  gravatar_for(user, size: 20) %>
+          <%=  user.name %>
+          <font size = "1.2">
+          <%= withdraw_friendrequest_link(id, current_user.id)   %>
+          </font></p>
+        <% end %>
+      </div>
+      <!-- accordion-inner -->
+    </div>
+    <!-- collapseThree -->
+  </div>
+  <!-- accordion-group -->
+</div>
+<!-- accordion -->

@@ -28,8 +28,8 @@ module FriendshipsHelper
     link_to "Ignore", controller: :friendships, action: :ignore, id: friendship_id, user_id: user_id
   end
 
-  def delete_friendship_link(friendship_id, user_id)
-    link_to "End", controller: :friendships, action: :destroy, id: friendship_id, user_id: user_id, method: :delete
+  def delete_friendship_link(text, friendship_id, user_id)
+    link_to text, controller: :friendships, action: :destroy, id: friendship_id, user_id: user_id, method: :delete
   end
 
   def withdraw_friendrequest_link(friendship_id, user_id)
