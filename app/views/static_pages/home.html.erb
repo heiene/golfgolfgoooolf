@@ -2,9 +2,11 @@
 
 <% if !signed_in? %> 
   <h1>Welcom to theGolfApp</h1>
+
   </br>
   <p><%= link_to "Sign up", signup_path, class:"btn btn-info" %></p>
   </br>
 <% else %>
   <%= render 'shared/user_home' %>
+  <!-- <i class="icon-search icon-white"></i> -->
 <% end %>
