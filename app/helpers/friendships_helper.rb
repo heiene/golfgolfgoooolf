@@ -40,6 +40,15 @@ module FriendshipsHelper
     link_to "Add friend" , friendships_path(friend_id: friend, user_id: user), method: :post, class:"btn btn-small"  
   end
 
+  def any_pending_visible?
+    visible = false
+    for friend in @current_user.requested_friendships
+      if friend.visible == true
+        visible = true
+      end
+    end
+    return visible
+  end
 
 
 end
