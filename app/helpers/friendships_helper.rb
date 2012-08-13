@@ -37,7 +37,7 @@ module FriendshipsHelper
   end
 
   def add_friendship_link( friend , user )
-    link_to "Add friend" , friendships_path(friend_id: friend, user_id: user), method: :post, class:"btn btn-small"  
+    link_to "Add friend" , friendships_path(friend_id: friend, user_id: user), method: :post, class:"label label-info"  
   end
 
   def any_pending_visible?

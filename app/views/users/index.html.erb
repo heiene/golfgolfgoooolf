@@ -1,53 +1,67 @@
 <%= provide(:title, "All users") %>
-<h1>Users</h1>
+<h2>Users</h2>
 
-  ------------</br>
-  <% current_user.friendships.each do |f| %> 
-    <%=  User.find(f.friend_id).name  %>
-  <% end %>
-  </br>------------</br>
-  <% current_user.indirect_friendships.each do |f| %> 
-    <%=  User.find(f.user_id).name  %>
-  <% end %>
-  </br>------------
+<%= form_tag users_path, method: :get do %>
+  <div class="controls">
+    <div class= "input-append">
+      <%= text_field_tag :search, params[:search]%>
+      <%= submit_tag "Search", name: nil, class:"btn" %>
+    </div>
+  </div>
+<% end %>
 
-  <% @Users.each do |user| %>
-  <li><%= gravatar_for(user, size: 20 ) %>  
-      <%= link_to user.name, user %> - <%= user.email %>
-      
-      <% if !current_user?(user) %>
-       - 
-        <% if friendship_exists?(user) %>
-          <% id = friendship_exists?(user)[1] %>
-          <% initiator = friendship_exists?(user)[2] %>
-          <% if Friendship.find(id).approved == true %>
-            <%= delete_friendship_link("End",id, current_user.id)   %>
-          <% elsif initiator == "i" %>
-            <%= confirm_friendship_link(id, current_user.id)  %> | 
-            <%= reject_friendship_link(id, current_user.id)    %> | 
-             <%= ignore_friendship_link(id, current_user.id)   %>
-          <% else %>
-            <%= withdraw_friendrequest_link(id, current_user.id)   %>
+<div class="row">
+  <% if current_user.admin? %>
+  <div class="span9">
+  <% else %>
+  <div class="span7">
+  <% end %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>user_id</th>
+          <th>name</th>
+          <th>e-mail</th>
+          <th>action</th>
+           <% if current_user.admin?%>
+          <th>admin options</th>
           <% end %>
-        <% else %>
-        <%= add_friendship_link(user, current_user.id) %> 
+        </tr>
+      </thead>
+      <tbody>
+        <% num = 1 %>
+        <% for user in @users do %>
+          <tr>
+            <td><%=  num %></td>
+            <td><%= user.id %></td>
+            <td><%= gravatar_for(user, size: 20) %> <%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><% if friendship_exists?(user) %>
+             noe her?
+              <% else %>
+              <%= add_friendship_link( user , current_user.id ) %>
+              <% end %>
+
+            </td>
+              <% if current_user.admin? %>
+              <td>  
+                <% if !current_user?(user)%>
+                <%=  delete_user_link(user) %>
+                <% end %>
+              </td>
+              <% end %>
+
+           
+          </tr>
+           <% num += 1 %>
         <% end %>
-      <% end %> 
-
-      <% if current_user.admin? && !current_user?(user)%>
         
-        | <%= link_to "X", user, method: :delete, class:"badge badge-important",
-                                    data: { confirm: "You sure?" } %>      
-      <% end %> 
-      
-      <% if current_user.admin? %>
-        | <% if user.admin? %> 
-            <%= "Admin user"%>
-          <% else %> 
-            <%= "Not Admin" %> 
-          <% end %>
-      <% end %> 
-  
-  </li>
-  </br>
-  <% end %>
+      </tbody>
+
+    </table>
+    <%= will_paginate @users %>
+  </div>
+  <!-- span6  -->
+</div>
+<!-- row -->

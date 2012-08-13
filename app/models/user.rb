@@ -44,6 +44,11 @@ class User < ActiveRecord::Base
   def friends
     direct_friends | indirect_friends
   end
+
+  # searchable do
+  #   text :name, :email, :id
+  # end
+
   private
 
     def create_remember_token
