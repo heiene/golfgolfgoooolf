@@ -16,6 +16,19 @@ module FriendshipsHelper
     return false
   end
 
+  def isfriend?(user)
+    current_user.friends.each do |friend|
+      @testtest = friend.id
+      @testtast = user.id
+      if user.id == friend.id
+        return true
+      else
+        return false
+      end
+      
+    end
+  end
+
   def confirm_friendship_link(friendship_id, user_id)
     link_to "Confirm", controller: :friendships, action: :approve, id: friendship_id, user_id: user_id
   end

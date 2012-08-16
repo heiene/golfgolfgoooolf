@@ -1,0 +1,57 @@
+<table class="table" id="users">
+  <thead>
+    <tr>
+      <th>#</th>
+      <% if current_user.admin? %>
+      <th>user_id</th>
+      <% end %>
+      <th>name</th>
+      <th>e-mail</th>
+      <th>action</th>
+       <% if current_user.admin?%>
+      <th>admin options</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% num = 1 %>
+    <% for user in @users do %>
+      <tr>
+        <td><%=  num %></td>
+        <% if current_user.admin?%>
+        <td><%= user.id %></td>
+        <% end %>
+        <td><%= gravatar_for(user, size: 20) %> 
+          <% if isfriend?(user) %>
+            <%= link_to user.name, user %>
+          <% else %>
+            <%= user.name %>
+          <% end %>
+        </td>
+        <td><%= user.email %></td>
+        <td><% if friendship_exists?(user) || current_user?(user) %>
+              <% if current_user?(user) %>
+              <% else %>
+              noe her?
+              <% end %>
+          
+            <% else %>
+            <%= add_friendship_link( user , current_user.id ) %>
+            <% end %>
+
+        </td>
+          <% if current_user.admin? %>
+          <td>  
+            <% if !current_user?(user)%>
+            <%=  delete_user_link(user) %>
+            <% end %>
+          </td>
+          <% end %>
+
+       
+      </tr>
+       <% num += 1 %>
+    <% end %>
+    
+  </tbody>
+</table>

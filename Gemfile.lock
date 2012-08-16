@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rweng/jquery-datatables-rails.git
+  revision: a6bde0aed270e9d3dac239d331f84f9c22817750
+  specs:
+    jquery-datatables-rails (1.10.0)
+      jquery-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -195,6 +202,7 @@ DEPENDENCIES
   faker (= 1.0.1)
   guard-rspec (= 0.5.5)
   guard-spork (= 0.3.2)
+  jquery-datatables-rails!
   jquery-rails (= 2.0.0)
   pg (= 0.12.2)
   rails (= 3.2.6)

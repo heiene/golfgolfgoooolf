@@ -1,66 +1,14 @@
 <%= provide(:title, "All users") %>
 <h2>Users</h2>
-
-<%= form_tag users_path, method: :get do %>
-  <div class="controls">
-    <div class= "input-append">
-      <%= text_field_tag :search, params[:search]%>
-      <%= submit_tag "Search", name: nil, class:"btn" %>
-    </div>
-  </div>
-<% end %>
-
+</br>
 <div class="row">
   <% if current_user.admin? %>
   <div class="span9">
   <% else %>
   <div class="span7">
   <% end %>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>user_id</th>
-          <th>name</th>
-          <th>e-mail</th>
-          <th>action</th>
-           <% if current_user.admin?%>
-          <th>admin options</th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
-        <% num = 1 %>
-        <% for user in @users do %>
-          <tr>
-            <td><%=  num %></td>
-            <td><%= user.id %></td>
-            <td><%= gravatar_for(user, size: 20) %> <%= user.name %></td>
-            <td><%= user.email %></td>
-            <td><% if friendship_exists?(user) %>
-             noe her?
-              <% else %>
-              <%= add_friendship_link( user , current_user.id ) %>
-              <% end %>
-
-            </td>
-              <% if current_user.admin? %>
-              <td>  
-                <% if !current_user?(user)%>
-                <%=  delete_user_link(user) %>
-                <% end %>
-              </td>
-              <% end %>
-
-           
-          </tr>
-           <% num += 1 %>
-        <% end %>
-        
-      </tbody>
-
-    </table>
-    <%= will_paginate @users %>
+    <%= render 'shared/users_table' %>
+  
   </div>
   <!-- span6  -->
 </div>

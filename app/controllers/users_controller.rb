@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update, :index] # Signed_in_user er flyttet til sessionskontroller
                                                                 # for å være tilgjengelig for andre klasser.
   before_filter :correct_user,   only: [:edit, :update]
+  before_filter :friend_of_user, only: :show
   before_filter :admin_user,     only: :destroy
 
   def new
@@ -41,7 +42,8 @@ class UsersController < ApplicationController
     #   fulltext params[:search]
     # end
     # @users = @search.results
-    @users = User.paginate(per_page: 10, page: params[:page])
+    @users = User.all
+    #paginate(per_page: 10, page: params[:page])
   end
 
   def destroy
@@ -68,5 +70,13 @@ class UsersController < ApplicationController
     def admin_user
       redirect_to root_path unless current_user.admin?
     end
+
+    def friend_of_user
+      user = User.find(params[:id])
+      unless isfriend?(user) || current_user?(user)
+        redirect_to users_path 
+      end
+    end
+
 
 end

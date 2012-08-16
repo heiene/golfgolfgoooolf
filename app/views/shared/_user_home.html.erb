@@ -16,6 +16,8 @@
               <% end %>
             <% end %>
         </div>
+        <% else %>
+          <%= gravatar_for(@current_user, size: 70)  %>
         <% end %>
       </p>
 

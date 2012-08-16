@@ -1,13 +1,14 @@
 class FriendshipsController < ApplicationController
   before_filter :signed_in_user
   before_filter :correct_user
+  before_filter :not_friend_with_youself, only: :create
   # include FriendshipsHelper
 
   def create
-    @friendship = current_user.friendships.build(friend_id: params[:friend_id])
-    # if   current_user.friendship_exists?(User.find(params[:friend_id]))
-    #   current_user.friendship_exists?(User.find(params[:friend_id]))
-    # end
+    #@friendship = current_user.friendships.build(friend_id: params[:friend_id])
+    # # if   current_user.friendship_exists?(User.find(params[:friend_id]))
+    # #   current_user.friendship_exists?(User.find(params[:friend_id]))
+    # # end
 
     if @friendship.save
       flash[:success] = "Friendship requested with: #{User.find(params[:friend_id]).name}"
@@ -92,4 +93,11 @@ class FriendshipsController < ApplicationController
       end
     end
 
+    def not_friend_with_youself
+      @friendship = current_user.friendships.build(friend_id: params[:friend_id])
+      if @friendship.friend_id == @friendship.user_id
+        flash[:warning] = "Cannot make friends with yourself"
+        redirect_to root_path
+      end
+    end
 end
