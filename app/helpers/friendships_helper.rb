@@ -17,15 +17,16 @@ module FriendshipsHelper
   end
 
   def isfriend?(user)
-    current_user.friends.each do |friend|
-      @testtest = friend.id
-      @testtast = user.id
-      if user.id == friend.id
-        return true
-      else
-        return false
+    if current_user.friends.any?
+      current_user.friends.each do |friend|
+        @testtest = friend.id
+        @testtast = user.id
+        if user.id == friend.id
+          return true
+        end
       end
-      
+    else
+      return false
     end
   end
 

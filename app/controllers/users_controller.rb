@@ -73,7 +73,7 @@ class UsersController < ApplicationController
 
     def friend_of_user
       user = User.find(params[:id])
-      unless isfriend?(user) || current_user?(user)
+      unless (friendship_exists?(user) && isfriend?(user)) || current_user?(user)
         redirect_to users_path 
       end
     end
