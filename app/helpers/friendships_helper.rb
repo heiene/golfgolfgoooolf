@@ -4,27 +4,22 @@ module FriendshipsHelper
     
     current_user.friendships.each do |friend|
       if friend.friend_id == user.id
-        return true, friend.id, "d"
+        return true, friend.id, "d", friend.approved
       end 
     end
   
     current_user.indirect_friendships.each do |friend|
       if friend.user_id == user.id
-        return true, friend.id, "i"
+        return true, friend.id, "i", friend.approved
       end 
     end
     return false
   end
 
   def isfriend?(user)
-    if current_user.friends.any?
-      current_user.friends.each do |friend|
-        @testtest = friend.id
-        @testtast = user.id
-        if user.id == friend.id
-          return true
-        end
-      end
+    is_friendship = friendship_exists?(user)
+    if current_user.friends.any? && is_friendship && is_friendship[3] == true
+      return true
     else
       return false
     end

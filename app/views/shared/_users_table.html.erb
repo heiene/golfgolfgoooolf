@@ -22,7 +22,8 @@
         <td><%= user.id %></td>
         <% end %>
         <td><%= gravatar_for(user, size: 20) %> 
-          <% if friendship_exists?(user) && isfriend?(user) %>
+          <% if isfriend?(user) %>
+          <%= @is_friendship %>
             <%= link_to user.name, user %>
           <% else %>
             <%= user.name %>
