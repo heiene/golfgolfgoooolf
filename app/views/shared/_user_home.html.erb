@@ -12,6 +12,11 @@
               <% if friend.visible == true %>
                 <li>
                   <%=  User.find(friend.user_id).name %>
+                  <%   user = User.find(friend.user_id) %>
+                  <%   id = friendship_exists?(user)[1] %>
+                  ( <%= confirm_friendship_link(id, @current_user.id) %>
+                  | <%= reject_friendship_link(id, @current_user.id) %>
+                  | <%= ignore_friendship_link(id, @current_user.id) %> )
                 </li>
               <% end %>
             <% end %>

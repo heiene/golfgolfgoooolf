@@ -1,4 +1,8 @@
-// @import "bootstrap";
+@import "bootstrap";
+$menu-text-color: #999999;
+$menu-color:  #2c2c2c;
+$link-color: #0088cc;
+$link-hover-color: #005580;
 
 body {
   position: relative;
@@ -15,7 +19,8 @@ border-top: 1px solid #E5E5E5;
 
 .navbar-inner {
 
-  background-color: #2c2c2c;
+  background-color: $menu-color;
+  background-image: none;
   background-image: -moz-linear-gradient(top, #333333, #222222);
   background-image: -ms-linear-gradient(top, #333333, #222222);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
@@ -25,4 +30,12 @@ border-top: 1px solid #E5E5E5;
   background-repeat: repeat-x;
 
   filter: progid:dximagetransform.microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
+}
+
+.navbar .navbar-link {
+  color: #999999;
+}
+
+.navbar .navbar-link:hover {
+  color: #ffffff;
 }
