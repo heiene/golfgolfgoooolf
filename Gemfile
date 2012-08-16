@@ -6,7 +6,7 @@ gem 'bootstrap-sass', '2.0.0'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
-gem 'bootstrap-will_paginate', '0.0.6'
+#gem 'bootstrap-will_paginate', '0.0.6'
 
 
 group :development, :test do
@@ -20,6 +20,7 @@ group :assets do
   gem 'coffee-rails', '3.2.2'
   gem 'uglifier', '1.2.3'
   gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+  gem 'twitter-bootstrap-rails'
 end
 
 gem 'jquery-rails', '2.0.0'
